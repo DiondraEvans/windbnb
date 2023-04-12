@@ -44,7 +44,8 @@ const Login = () => {
         // get session info (user)
         let user = await getUserFromSession()
         setUser(user);
-        navigate("/")
+        console.log(user)
+        // navigate("/")
     }
 
   return (
