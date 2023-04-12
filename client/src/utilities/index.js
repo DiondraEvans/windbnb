@@ -4,7 +4,7 @@ export const logIn = async (formData) => {
 
     let serverResponse = await axios({
         method: "PUT",
-        url: "/users/login",
+        url: "https://wind-bnb-website-api.vercel.app/users/login",
         data: formData
     });
     console.log(serverResponse);
@@ -12,7 +12,7 @@ export const logIn = async (formData) => {
 return serverResponse;
 } 
 export const getUserFromSession = async () => {
-    let response = await axios('/session-info')
+    let response = await axios('https://wind-bnb-website-api.vercel.app/session-info')
     console.log(response);
     // WE HAVE THE LOGGED IN USER! :)
     if (response.data.session.passport) {
@@ -27,7 +27,7 @@ export const makeServerCall = async (user) => {
     console.log(user)
     let serverResponse = await axios({
         method: 'GET',
-        url: `/get_trips/${user}`
+        url: `https://wind-bnb-website-api.vercel.app/get_trips/${user}`
     });
     console.log(serverResponse);
     
