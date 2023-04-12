@@ -33,7 +33,7 @@ const GetSignUp = () =>  {
     try {
       const response = await axios({
         method: 'POST',
-        url: "/users/signup",
+        url: "https://wind-bnb-website-api.vercel.app/users/signup",
         headers: {
           'Content-Type': 'application/json',
           },

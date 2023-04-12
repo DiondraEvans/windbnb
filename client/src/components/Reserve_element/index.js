@@ -30,7 +30,7 @@ function GetReservedTrip(props) {
             try {
                 let serverResponse = await axios({
                     method: 'POST',
-                    url: "/create_trip",
+                    url: "https://wind-bnb-website-api.vercel.app/create_trip",
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -46,7 +46,7 @@ function GetReservedTrip(props) {
         setName("")
         setDate("")
         setSummary("")
-        navigate('/activetrips');
+        navigate('https://wind-bnb-website.vercel.app/activetrips');
     }
   return (
     <div className="ReservedTripBox">

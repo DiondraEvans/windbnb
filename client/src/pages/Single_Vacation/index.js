@@ -20,7 +20,7 @@ function GetSingleData() {
     const makeServerCall = async () => {
     let serverResponse = await axios({
         method: 'GET',
-        url: `/single/${id}`
+        url: `https://wind-bnb-website-api.vercel.app/single/${id}`
     });
     console.log(serverResponse.data)
     let data = serverResponse.data

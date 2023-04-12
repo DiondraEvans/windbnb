@@ -33,7 +33,7 @@ function ActiveCard(props) {
         try {
           let serverResponse = await axios({
             method: 'GET',
-            url: `/single/${id}`
+            url: `https://wind-bnb-website-api.vercel.app/single/${id}`
           });
           console.log(serverResponse.data);
           let data = serverResponse.data;
@@ -102,7 +102,7 @@ function ActiveCard(props) {
     })
     const makeCallToUpdate = async() =>{
       try {
-        let serverResponse = await axios.put(`/update_trip/${trip}`, updates)
+        let serverResponse = await axios.put(`https://wind-bnb-website-api.vercel.app/update_trip/${trip}`, updates)
         console.log(serverResponse.data)
       } catch (error) {
         console.log(error.message)
@@ -133,7 +133,7 @@ function ActiveCard(props) {
     const makeCallToServer = async() =>{
     let serverResponse = await axios({
     method: 'DELETE',
-    url: `/delete/${trip}`
+    url: `https://wind-bnb-website-api.vercel.app/delete/${trip}`
   })
   console.log(serverResponse.data);
   }

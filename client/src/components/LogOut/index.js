@@ -12,7 +12,7 @@ const UserLogOut = () => {
         e.preventDefault()
         try {
             const response = await axios({
-              url: '/logout',
+              url: 'https://wind-bnb-website-api.vercel.app/logout',
               method: 'POST',
               withCredentials: true,
             });

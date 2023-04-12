@@ -44,7 +44,7 @@ const navigate = useNavigate();
       makeServerCall(searchString, selectedOption, guestAmount)
       console.log(searchString)
      
-      navigate("/:search");
+      navigate("https://wind-bnb-website.vercel.app/:search");
    
   };
  //do not use http://localhost:5000/search etc because you will not get a response.
