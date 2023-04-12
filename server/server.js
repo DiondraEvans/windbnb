@@ -15,7 +15,8 @@ const app = express();
 
 // access
 app.use(cors({
-    origin: "*"
+    origin: "*",
+    credentials: true
 }));
 
 // logs the different requests to our server
