@@ -1,0 +1,12 @@
+.card-body{
+    border: 1px solid black;
+    text-align: left;
+    line-height: 3;
+}
+a{
+    text-decoration: none;
+}
+.api-img{
+    height: 225px;
+    border-radius: 12px;
+}
