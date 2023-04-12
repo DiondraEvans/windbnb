@@ -44,7 +44,7 @@ const navigate = useNavigate();
       makeServerCall(searchString, selectedOption, guestAmount)
       console.log(searchString)
      
-      navigate("https://wind-bnb-website.vercel.app/:search");
+      navigate("/:search");
    
   };
  //do not use http://localhost:5000/search etc because you will not get a response.
@@ -66,7 +66,7 @@ const navigate = useNavigate();
           if(!string){
             let serverResponse = await axios({
               method: 'GET',
-              url: '/search?location=Atlanta&type=home&guest=2'
+              url: 'https://wind-bnb-website-api.vercel.app/search?location=Atlanta&type=home&guest=2'
             });
             console.log(serverResponse.data);
             let data = serverResponse.data
@@ -82,7 +82,7 @@ const navigate = useNavigate();
           } else if(string){
             let serverResponse = await axios({
               method: 'GET',
-              url: `/search?location=${string}&type=${accomodation_type}&guest=${guest}`
+              url: `https://wind-bnb-website-api.vercel.app/search?location=${string}&type=${accomodation_type}&guest=${guest}`
             });
             console.log(serverResponse.data);
             let data = serverResponse.data
