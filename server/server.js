@@ -82,6 +82,7 @@ app.use(session({
 
 app.get('/session-info', (req, res) => {
     if (req.session.user) {
+        console.log(req.session.user)
       res.json({ user: req.session.user });
     } else {
       res.status(401).json({ message: 'User not authenticated' });
