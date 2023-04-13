@@ -71,7 +71,7 @@ initializePassport(
         return user;
     },
 );
-
+//-----------------Session below--------------
 
 app.use(session({
     secure: true,
@@ -82,11 +82,19 @@ app.use(session({
 }))
 
 app.get('/session-info', (req, res) => {
-    // res.json({
-    //     session: req.session
-    // });
-res.json(`hello, this is your session secret, so we can rule this out ${process.env.SESSION_SECRET}`)
-});
+    if (req.session.user) {
+      res.json({ user: req.session.user });
+    } else {
+      res.status(401).json({ message: 'User not authenticated' });
+    }
+  });
+  
+  
+  
+  
+  
+  
+  
 
 
 
