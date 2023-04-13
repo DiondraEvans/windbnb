@@ -1,10 +1,9 @@
 import axios from 'axios';
 // utilites folder is for universal, reusable functions
 export const logIn = async (formData) => {
-    console.log(formData)
     let serverResponse = await axios({
         method: "PUT",
-        url: "https://windbnb-zd7l.onrender.com/users/login",
+        url: "https://wind-bnb-website-api.vercel.app/users/login",
         data: formData
     });
     console.log(serverResponse);
@@ -13,16 +12,16 @@ return serverResponse;
 } 
 
 export const getUserFromSession = async () => {
-    let response = await axios('https://windbnb-zd7l.onrender.com/session-info')
+    let response = await axios('https://wind-bnb-website-api.vercel.app/session-info')
     console.log(response);
     // WE HAVE THE LOGGED IN USER! :)
-    // if (response.data.session.passport) {
-    //   let user = response.data.session.passport.user;
-    //   console.log(user)
-    //   return user;
-    // } else {
-    // return false
-    // }
+    if (response.data.session.passport) {
+      let user = response.data.session.passport.user;
+      console.log(user)
+      return user;
+    } else {
+    return false
+    }
 }
 
 export const makeServerCall = async (user) => {
