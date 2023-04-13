@@ -86,11 +86,11 @@ app.use(session({
 }))
 
 app.get('/session-info', (req, res) => {
-    console.log(req.session.user)
+    console.log(req.session.passport.user)
     if (req.session.user) {
-        console.log(req.session.user)
+        console.log(req.session.passport.user)
         
-      res.json({ user: req.session.user });
+      res.json({ user: req.session.passport.user });
     } else {
       res.status(401).json({ message: 'User not authenticated' });
     }
