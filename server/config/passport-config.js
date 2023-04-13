@@ -1,5 +1,5 @@
 // passport (and other libraries use "strategies")
-const User = require('../models/user');
+const User = require('../models/user.js');
 const localStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
