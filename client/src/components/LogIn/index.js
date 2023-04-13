@@ -39,8 +39,18 @@ const Login = () => {
       // LOGIN
         // make a call to the server with this info and authenticate!
         e.preventDefault();
-        
-        await logIn(formState);
+        const logIn = async () => {
+
+          let serverResponse = await axios({
+              method: "PUT",
+              url: "https://wind-bnb-website-api.vercel.app/users/login",
+              data: formState
+          });
+          console.log(serverResponse);
+          return serverResponse;
+      } 
+
+      logIn();
         // get session info (user)
         let user = await getUserFromSession()
         setUser(user);
