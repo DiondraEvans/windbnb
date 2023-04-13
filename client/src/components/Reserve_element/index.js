@@ -46,7 +46,7 @@ function GetReservedTrip(props) {
         setName("")
         setDate("")
         setSummary("")
-        navigate('https://wind-bnb-website.vercel.app/activetrips');
+        navigate('/activetrips');
     }
   return (
     <div className="ReservedTripBox">

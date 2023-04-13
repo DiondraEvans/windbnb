@@ -1,7 +1,6 @@
 import axios from 'axios';
 // utilites folder is for universal, reusable functions
 export const logIn = async (formData) => {
-
     let serverResponse = await axios({
         method: "PUT",
         url: "https://wind-bnb-website-api.vercel.app/users/login",
@@ -11,12 +10,14 @@ export const logIn = async (formData) => {
 
 return serverResponse;
 } 
+
 export const getUserFromSession = async () => {
     let response = await axios('https://wind-bnb-website-api.vercel.app/session-info')
     console.log(response);
     // WE HAVE THE LOGGED IN USER! :)
     if (response.data.session.passport) {
       let user = response.data.session.passport.user;
+      console.log(user)
       return user;
     } else {
     return false
