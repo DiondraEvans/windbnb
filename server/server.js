@@ -15,7 +15,7 @@ const app = express();
 
 // access
 app.use(cors({
-    origin: ['https://wind-bnb-website.vercel.app', 'https://wind-bnb-website-api.vercel.app']//<---- location of react app were connecting to
+    origin: "*"
 }));
 
 // logs the different requests to our server
@@ -111,7 +111,7 @@ app.put('/users/login', async (req, res, next) => {
         }
     })(req, res, next);
 })
-
+//------------------ server routes-------------------
 app.get('/test_route', (req, res) => {
     res.send("good route!")
 })

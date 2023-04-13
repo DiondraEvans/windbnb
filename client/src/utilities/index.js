@@ -1,7 +1,7 @@
 import axios from 'axios';
 // utilites folder is for universal, reusable functions
 export const logIn = async (formData) => {
-
+    console.log(formData)
     let serverResponse = await axios({
         method: "PUT",
         url: "https://wind-bnb-website-api.vercel.app/users/login",
