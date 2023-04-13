@@ -1,5 +1,5 @@
 import './index.css';
-import { useState, useEffect} from 'react';
+import React from 'react';
 function GetFriends(props) {
 const {emails, names} = props
 const listOfNames = names.map((name, index) =>{

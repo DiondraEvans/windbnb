@@ -1,12 +1,12 @@
 import './index.css';
 import axios from 'axios';
-import React, { useEffect, useState, useContext  } from 'react';
+import React, { useContext  } from 'react';
 import { AppContext } from '../../contexts/app_context';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 function GetReservedTrip(props) {
     const navigate = useNavigate();
     const {accomodation} = props
-    let { tripName, names, date, summary, emails, setAccomodation, setName, setDate, setSummary, setemails, setnames, user } = useContext(AppContext);
+    let { tripName, names, date, summary, emails, setName, setDate, setSummary, user } = useContext(AppContext);
     let id = accomodation._id
     let price = accomodation.price
     let userId = user._id

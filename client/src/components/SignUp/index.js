@@ -2,10 +2,10 @@ import './index.css';
 import { AppContext } from '../../contexts/app_context';
 import { useState, useContext } from 'react';
 import axios from 'axios';
-import { Outlet } from 'react-router-dom';
+
 
 const GetSignUp = () =>  {
-  let { setUser, user, showLoginForm, setShowLoginForm } = useContext(AppContext);
+  let { setShowLoginForm } = useContext(AppContext);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -28,7 +28,7 @@ const GetSignUp = () =>  {
     console.log("submitting!");
 
     // check if password has special character (error handling)
-    const { confirm, error, ...data } = formData;
+    const { confirm, error, ...formData } = formData;
 
     try {
       const response = await axios({

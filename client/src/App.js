@@ -7,7 +7,7 @@ import { useState, useContext, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Card from './components/card'
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import './App.css';
 import Footer from './components/footer';
 import ResponsiveNav from './components/responsive_nav';
@@ -16,7 +16,7 @@ import ResponsiveNav from './components/responsive_nav';
 function App() {
  
   let {  names, tripName, carddata, setcarddata } = useContext(AppContext);
-  const mounted = useRef(false);
+  
      console.log(names)
 const [isOpen, setIsOpen] = useState(false);
     let {search} = useParams();

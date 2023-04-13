@@ -1,15 +1,13 @@
 import './index.css';
 import React, { useEffect, useState, useContext } from 'react';
-import { logIn, getUserFromSession } from '../../utilities/index'
-import axios from 'axios'
+import { logIn, getUserFromSession } from '../../utilities/index';
 import { AppContext } from '../../contexts/app_context';
-import { Link, useNavigate, redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
 
     let { setUser } = useContext(AppContext);
 
     const [formState, setFormState] = useState({email: '', password: ''});
-    const [error, setError] = useState("");
     const [disabled, setDisabled] = useState(true);
     const navigate = useNavigate();
 
@@ -46,7 +44,7 @@ const Login = () => {
         let user = await getUserFromSession()
         setUser(user);
         console.log(user)
-        // navigate("/")
+        navigate("/")
     }
 
   return (
