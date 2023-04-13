@@ -1,6 +1,6 @@
 import './index.css';
 import React, { useEffect, useState, useContext } from 'react';
-import { logIn, getUserFromSession } from '../../utilities/index'
+import { getUserFromSession } from '../../utilities/index'
 import axios from 'axios'
 import { AppContext } from '../../contexts/app_context';
 import { Link, useNavigate, redirect } from 'react-router-dom';
