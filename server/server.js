@@ -15,7 +15,7 @@ const app = express();
 
 // access
 app.use(cors({
-    origin: 'https://wind-bnb-website.vercel.app', //<---- location of react app were connecting to
+    origin: '*', //<---- location of react app were connecting to
     credentials: true
 }));
 
@@ -89,13 +89,6 @@ app.get('/session-info', (req, res) => {
     }
   });
   
-  
-  
-  
-  
-  
-  
-
 
 
 app.put('/users/login', async (req, res, next) => {
