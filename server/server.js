@@ -82,10 +82,10 @@ app.use(session({
 }))
 
 app.get('/session-info', (req, res) => {
-    res.json({
-        session: req.session
-    });
-    
+    // res.json({
+    //     session: req.session
+    // });
+    console.log("hi this is your server")
 });
 
 
