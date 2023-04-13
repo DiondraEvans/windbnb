@@ -43,7 +43,6 @@ const session = require('express-session');
 const initializePassport = require('./config/passport-config.js')
 // initialize Passport and session middleware
 app.use(passport.initialize());
-app.use(passport.session());
 app.use(cookieParser())
 
 //everything a user needs to sign up
@@ -89,8 +88,7 @@ app.get('/session-info', (req, res) => {
     console.log(req.session.passport.user)
     if (req.session.user) {
         console.log(req.session.passport.user)
-        
-      res.json({ user: req.session.passport.user });
+        res.json({ user: req.session.passport.user });
     } else {
       res.status(401).json({ message: 'User not authenticated' });
     }
