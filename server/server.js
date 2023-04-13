@@ -81,7 +81,7 @@ app.use(session({
 }))
 
 app.get('/session-info', (req, res) => {
-    console.log("req.session.user")
+    res.json(req.session.user)
     // if (req.session.user) {
     //     console.log(req.session.user)
         
