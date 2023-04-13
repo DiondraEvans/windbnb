@@ -82,10 +82,10 @@ app.use(session({
 }))
 
 app.get('/session-info', (req, res) => {
-    res.json({
-        session: req.session
-    });
-    
+    // res.json({
+    //     session: req.session
+    // });
+res.json(`hello, this is your session secret, so we can rule this out ${process.env.SESSION_SECRET}`)
 });
 
 
