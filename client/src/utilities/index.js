@@ -5,8 +5,7 @@ export const logIn = async (formData) => {
     let serverResponse = await axios({
         method: "PUT",
         url: "https://wind-bnb-website-api.vercel.app/users/login",
-        data: formData,
-        withCredentials: true
+        data: formData
     });
     console.log(serverResponse);
 

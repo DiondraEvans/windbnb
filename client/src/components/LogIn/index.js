@@ -41,6 +41,7 @@ const Login = () => {
         e.preventDefault();
         
         await logIn(formState);
+        console.log(formState)
         // get session info (user)
         let user = await getUserFromSession()
         setUser(user);
