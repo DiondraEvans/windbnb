@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const Login = () => {
 
     let { setUser } = useContext(AppContext);
-
+    const [error, setError] = useState("");
     const [formState, setFormState] = useState({email: '', password: ''});
     const [disabled, setDisabled] = useState(true);
     const navigate = useNavigate();
@@ -44,7 +44,7 @@ const Login = () => {
         let user = await getUserFromSession()
         setUser(user);
         console.log(user)
-        navigate("/")
+        // navigate("/")
     }
 
   return (
