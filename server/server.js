@@ -15,7 +15,7 @@ const app = express();
 
 // access
 app.use(cors({
-    origin: 'https://wind-bnb-website.vercel.app',
+    origin: 'https://wind-bnb-website.vercel.app', //<---- location of react app were connecting to
     credentials: true
 }));
 

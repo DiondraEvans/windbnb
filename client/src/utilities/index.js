@@ -6,9 +6,7 @@ export const logIn = async (formData) => {
         method: "PUT",
         url: "https://wind-bnb-website-api.vercel.app/users/login",
         data: formData,
-        headers: {
-            'Content-Type': 'application/json',
-            }
+        withCredentials: true
     });
     console.log(serverResponse);
 
