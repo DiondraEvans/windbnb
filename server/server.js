@@ -37,14 +37,10 @@ mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: 
 mongoose.connection.once('open', ()=> {
     console.log('connected to mongo');
 });
-const cookieParser = require('cookie-parser')
+
 const passport = require('passport');
 const session = require('express-session');
 const initializePassport = require('./config/passport-config.js')
-// initialize Passport and session middleware
-app.use(passport.initialize());
-app.use(cookieParser())
-
 //everything a user needs to sign up
 app.post('/users/signup',async (req, res) => {
 
@@ -87,8 +83,9 @@ app.use(session({
 app.get('/session-info', (req, res) => {
     console.log(req.session.passport.user)
     if (req.session.user) {
-        console.log(req.session.passport.user)
-        res.json({ user: req.session.passport.user });
+        console.log(req.session.user)
+        
+      res.json({ user: req.session.user });
     } else {
       res.status(401).json({ message: 'User not authenticated' });
     }
@@ -186,6 +183,9 @@ app.put('/update_trip/:id', async (req, res) => {
     console.log(response)
     res.send(response)
   });
+// initialize Passport and session middleware
+app.use(passport.initialize());
+
 
 app.post('/logout', function(req, res, next) {
     console.log(req);
