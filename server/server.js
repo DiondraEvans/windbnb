@@ -25,7 +25,7 @@ app.use(logger('dev'))
 app.use(express.json())
 
 // server build folder
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 //remember to input user and pass variables
 let connectionString =`mongodb+srv://${process.env.mongoUsername}:${process.env.mongoPassword}@mongosetupcluster.anqqbl8.mongodb.net/VacationSite?retryWrites=true&w=majority`
@@ -81,6 +81,7 @@ app.use(session({
 }))
 
 app.get('/session-info', (req, res) => {
+    console.log(req.session)
     res.json({
         session: req.session
     });
