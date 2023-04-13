@@ -38,6 +38,7 @@ mongoose.connection.once('open', ()=> {
     console.log('connected to mongo');
 });
 
+
 const passport = require('passport');
 const session = require('express-session');
 const initializePassport = require('./config/passport-config.js')
@@ -70,7 +71,7 @@ initializePassport(
         return user;
     },
 );
-//-----------------Session below--------------
+
 
 app.use(session({
     secure: true,
@@ -81,16 +82,12 @@ app.use(session({
 }))
 
 app.get('/session-info', (req, res) => {
-    console.log(req.session.passport.user)
-    if (req.session.user) {
-        console.log(req.session.user)
-        
-      res.json({ user: req.session.user });
-    } else {
-      res.status(401).json({ message: 'User not authenticated' });
-    }
-  });
-  
+    console.log(`here is your user ${req.session.passport.user}`)
+    res.json({
+        session: req.session
+    });
+});
+
 
 
 app.put('/users/login', async (req, res, next) => {
@@ -105,16 +102,18 @@ app.put('/users/login', async (req, res, next) => {
                 user: false
             })
         } else {
+            // delete user.password
             req.logIn(user, err => {
                 if (err) throw err;
                 res.json({
                     message: "successfully authenticated",
+                    // remove user
                 })
             })
         }
     })(req, res, next);
 })
-//------------------ server routes-------------------
+
 app.get('/test_route', (req, res) => {
     res.send("good route!")
 })
