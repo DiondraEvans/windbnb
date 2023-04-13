@@ -82,7 +82,7 @@ app.use(session({
 
 app.get('/session-info', (req, res) => {
     if (req.session) {
-        res.json({ user: req.session });
+        res.json( req.session );
       } else {
         res.status(401).json({ message: 'User not authenticated' });
       }
