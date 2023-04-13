@@ -82,10 +82,10 @@ app.use(session({
 }))
 
 app.get('/session-info', (req, res) => {
-    // res.json({
-    //     session: req.session
-    // });
-    console.log("hi this is your server")
+    res.json({
+        session: req.session
+    });
+    
 });
 
 
@@ -102,12 +102,10 @@ app.put('/users/login', async (req, res, next) => {
                 user: false
             })
         } else {
-            // delete user.password
             req.logIn(user, err => {
                 if (err) throw err;
                 res.json({
                     message: "successfully authenticated",
-                    // remove user
                 })
             })
         }
