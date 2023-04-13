@@ -12,7 +12,7 @@ export const logIn = async (formData) => {
 return serverResponse;
 } 
 export const getUserFromSession = async () => {
-    let response = await axios('https://wind-bnb-website-api.vercel.app//session-info')
+    let response = await axios('https://wind-bnb-website-api.vercel.app/session-info')
     console.log(response);
     console.log(`hello, this is your session secret, so we can rule this out ${process.env.SESSION_SECRET}`)
     // WE HAVE THE LOGGED IN USER! :)
