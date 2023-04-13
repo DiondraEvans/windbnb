@@ -3,7 +3,7 @@ import axios from 'axios';
 export const logIn = async (formData) => {
     let serverResponse = await axios({
         method: "PUT",
-        url: "/users/login",
+        url: "http://localhost:3000/users/login",
         data: formData
     });
     console.log(serverResponse);
@@ -12,7 +12,7 @@ return serverResponse;
 } 
 
 export const getUserFromSession = async () => {
-    let response = await axios('/session-info')
+    let response = await axios('http://localhost:3000/session-info')
     console.log(response);
     // WE HAVE THE LOGGED IN USER! :)
     if (response.data.session.passport) {
