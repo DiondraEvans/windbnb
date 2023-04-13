@@ -25,7 +25,7 @@ app.use(logger('dev'))
 app.use(express.json())
 
 // server build folder
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 //remember to input user and pass variables
 let connectionString =`mongodb+srv://${process.env.mongoUsername}:${process.env.mongoPassword}@mongosetupcluster.anqqbl8.mongodb.net/VacationSite?retryWrites=true&w=majority`
@@ -37,7 +37,6 @@ mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: 
 mongoose.connection.once('open', ()=> {
     console.log('connected to mongo');
 });
-
 
 const passport = require('passport');
 const session = require('express-session');
@@ -82,7 +81,6 @@ app.use(session({
 }))
 
 app.get('/session-info', (req, res) => {
-    console.log(`here is your user ${req.session.passport.user}`)
     res.json({
         session: req.session
     });
