@@ -1,6 +1,6 @@
 import './index.css';
 import React, { useEffect, useState, useContext } from 'react';
-import { getUserFromSession } from '../../utilities/index'
+import { logIn, getUserFromSession } from '../../utilities/index'
 import axios from 'axios'
 import { AppContext } from '../../contexts/app_context';
 import { Link, useNavigate, redirect } from 'react-router-dom';
@@ -17,16 +17,15 @@ const Login = () => {
         setDisabled(formState.email && formState.password ? false : true);
     }, [formState])
 
-    // useEffect(() => {
-    //   let autoLogin = async () => {
-    
-    //     await logIn({email: "w@w", password: "qqq"});
-    //     // get session info (user)
-    //     let user = await getUserFromSession()
-    //     setUser(user);
-    //   }
-    //   autoLogin()
-    // }, [])
+    useEffect(() => {
+      let autoLogin = async () => {
+        await logIn({email: "w@w", password: "qqq"});
+        // get session info (user)
+        let user = await getUserFromSession()
+        setUser(user);
+      }
+      autoLogin()
+    }, [])
 
     const handleChange = (event) => {
         let propertyName = event.target.name;
@@ -40,18 +39,8 @@ const Login = () => {
       // LOGIN
         // make a call to the server with this info and authenticate!
         e.preventDefault();
-        const logIn = async () => {
-
-          let serverResponse = await axios({
-              method: "PUT",
-              url: "https://wind-bnb-website-api.vercel.app/users/login",
-              data: formState
-          });
-          console.log(serverResponse);
-          return serverResponse;
-      } 
-
-      logIn();
+        
+        await logIn(formState);
         // get session info (user)
         let user = await getUserFromSession()
         setUser(user);
