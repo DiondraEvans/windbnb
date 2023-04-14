@@ -185,7 +185,7 @@ app.put('/update_trip/:id', async (req, res) => {
   });
 // initialize Passport and session middleware
 app.use(passport.initialize());
-
+app.use(passport.session());
 
 app.post('/logout', function(req, res, next) {
     console.log(req);
