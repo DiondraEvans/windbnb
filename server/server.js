@@ -15,7 +15,7 @@ const app = express();
 
 // access
 app.use(cors({
-    origin: "*"
+    origin: "https://wind-bnb-website.vercel.app"
 }));
 
 // logs the different requests to our server

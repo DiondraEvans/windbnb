@@ -14,6 +14,7 @@ return serverResponse;
 export const getUserFromSession = async () => {
     let response = await axios({
         method: "GET",
+        withCredentials: true,
         url: 'https://wind-bnb-website-api.vercel.app/session-info'
     })
     console.log(response);
