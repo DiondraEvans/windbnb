@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt')
 const passport = require('passport');
 const session = require('express-session');
 const initializePassport = require('./config/passport-config.js')
-const MongoStore = require('connect-mongo')(session)
+const MongoStore = require('connect-mongo')
 // cross origin access 
 const cors = require('cors');
 const axios = require("axios");
@@ -42,12 +42,11 @@ mongoose.connection.once('open', ()=> {
     console.log('connected to mongo');
 });
 const sessionStore = MongoStore.create({
-    mongoUrl: 'mongodb+srv://${process.env.mongoUsername}:${process.env.mongoPassword}@mongosetupcluster.anqqbl8.mongodb.net/VacationSite',
+    mongoUrl: `mongodb+srv://${process.env.mongoUsername}:${process.env.mongoPassword}@mongosetupcluster.anqqbl8.mongodb.net/VacationSite`,
     collectionName: 'sessionStoreCollection',
     ttl: 60 * 60 // session TTL in seconds
   });
-
-
+  
 //everything a user needs to sign up
 app.post('/users/signup',async (req, res) => {
 
