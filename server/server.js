@@ -73,11 +73,10 @@ initializePassport(
 
 
 app.use(session({
-    secure: true,
-    secret: "HELLO",
+ 
+    secret: "Hello",
     resave: true,
     saveUninitialized: true,
-    cookie: { originalMaxAge: 3600000 }
 }))
 
 app.get('/session-info', (req, res) => {
