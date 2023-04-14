@@ -82,7 +82,9 @@ app.use(session({
 
 app.get('/session-info', (req, res) => {
     if (req.session) {
-      res.set('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Origin', 'https://wind-bnb-website.vercel.app.com');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
       res.json({ session: req.session });
     } else {
       res.status(401).json({ message: 'User not authenticated' });
