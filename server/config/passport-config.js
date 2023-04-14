@@ -34,13 +34,15 @@ module.exports = async function(passport) {
     // 2. add seralize function to passport library
     // place use in a session
     // callback function - a function that runs after another function (or at a specific trigger)
-    passport.serializeUser((user, cb) => {
+    passport.serializeUser((user, done) => {
         // do stuff here
-        cb(null, user)
+        console.log(user, user._id)
+        return done(null, user)
+        
     });
     // 3. add deserialize function to passport library
     // take out of session
-    passport.deserializeUser(async (id, cb) => {
-        return cb(null, await User.findById(id))
+    passport.deserializeUser(async (id, done) => {
+        return done(null, await User.findById(id))
     });
 };
