@@ -42,7 +42,7 @@ mongoose.connection.once('open', ()=> {
     console.log('connected to mongo');
 });
 const sessionStore = MongoStore.create({
-    mongoUrl: `mongodb+srv://${process.env.mongoUsername}:${process.env.mongoPassword}@mongosetupcluster.anqqbl8.mongodb.net/VacationSite`,
+    mongoUrl: connectionString,
     collectionName: 'sessionStoreCollection',
     ttl: 60 * 60 // session TTL in seconds
   });
