@@ -15,7 +15,7 @@ const app = express();
 
 // access
 app.use(cors({
-    origin: "https://wind-bnb-website.vercel.app"
+    origin: "*"
 }));
 
 // logs the different requests to our server
@@ -106,7 +106,7 @@ app.put('/users/login', async (req, res, next) => {
             req.logIn(user, err => {
                 if (err) throw err;
                 res.json({
-                    message: `${user}`,
+                    message: `success auth ${user}`,
                     // remove user
                 })
             })
