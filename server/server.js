@@ -81,7 +81,7 @@ app.use(session({
 
 app.get('/session-info', (req, res) => {
     if (req.session) {
-        res.header('Access-Control-Allow-Origin', 'https://localhost:3000/');
+        res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
         res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
       res.json({ session: req.session });
