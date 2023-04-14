@@ -3,7 +3,7 @@ import axios from 'axios';
 export const logIn = async (formData) => {
     let serverResponse = await axios({
         method: "PUT",
-        url: "/users/login",
+        url: "https://wind-bnb-website-api.vercel.app/users/login",
         data: formData
     });
     console.log(serverResponse);
@@ -14,7 +14,7 @@ return serverResponse;
 export const getUserFromSession = async () => {
     let response = await axios({
         method: "GET",
-        url: '/session-info'
+        url: 'https://wind-bnb-website-api.vercel.app/session-info'
     })
     console.log(response);
     // WE HAVE THE LOGGED IN USER! :)
