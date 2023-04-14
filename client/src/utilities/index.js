@@ -12,7 +12,11 @@ return serverResponse;
 } 
 
 export const getUserFromSession = async () => {
-    let response = await axios('https://wind-bnb-website-api.vercel.app/session-info')
+    let response = await axios({
+        method: "GET",
+        withCredentials: true,
+        url: 'https://wind-bnb-website-api.vercel.app/session-info'
+    })
     console.log(response);
     // WE HAVE THE LOGGED IN USER! :)
     if (response.data.session.passport) {
