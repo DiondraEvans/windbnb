@@ -35,16 +35,14 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 let connectionString =`mongodb+srv://${process.env.mongoUsername}:${process.env.mongoPassword}@mongosetupcluster.anqqbl8.mongodb.net/VacationSite?retryWrites=true&w=majority`
 //mongoose requirements
 mongoose.set('strictQuery', false);
-//connect express to Mongo
+//connect expresss to Mongo
 mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true });
 
 mongoose.connection.once('open', ()=> {
     console.log('connected to mongo');
 });
 const sessionStore = MongoStore.create({
-    mongooseConnection: mongoose.connection,
-    collectionName: 'sessionStoreCollection',
-    ttl: 60 * 60 // session TTL in seconds
+    mongoUrl: connectionString
   });
   
 //everything a user needs to sign up
