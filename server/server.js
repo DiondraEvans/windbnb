@@ -41,10 +41,36 @@ mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: 
 mongoose.connection.once('open', ()=> {
     console.log('connected to mongo');
 });
-const sessionStore = MongoStore.create({
-    mongoUrl: connectionString
-  });
-  
+const mongoStoreOptions = {
+  mongoUrl: connectionString,
+  collectionName: 'sessions'
+};
+
+
+initializePassport(
+    passport,
+    // passport tells us that they want a function that will return the correct user given an email
+    async email => {
+        let user = await User.findOne({email: email})
+        return user;
+    },
+    async id => {
+        let user = await User.findById(id);
+        return user;
+    },
+);
+
+
+const sessionOptions = {
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    store: MongoStore.create(mongoStoreOptions)
+};
+
+app.use(session(sessionOptions));
+
+//routes
 //everything a user needs to sign up
 app.post('/users/signup',async (req, res) => {
 
@@ -62,29 +88,8 @@ app.post('/users/signup',async (req, res) => {
 });
 //everything below is what a user needs to login
 
-initializePassport(
-    passport,
-    // passport tells us that they want a function that will return the correct user given an email
-    async email => {
-        let user = User.findOne({email: email})
-        return user;
-    },
-    async id => {
-        let user = User.findById(id);
-        return user;
-    },
-);
-
-
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
-    store: sessionStore
-}))
-
 app.get('/session-info', (req, res) => {
-    console.log(req.session)
+    console.log(req.session.passport.user)
     if (req.session) {
       res.json({ session: req.session });
     } else {
@@ -109,9 +114,13 @@ app.put('/users/login', async (req, res, next) => {
             req.logIn(user, err => {
                 if (err) throw err;
                 res.json({
-                    message: `success auth ${user}`,
-                    // remove user
-                })
+                    message: "Login successful",
+                    user: {
+                      id: user._id,
+                      email: user.email,
+                      name: user.name,
+                    },
+                  });
             })
         }
     })(req, res, next);
