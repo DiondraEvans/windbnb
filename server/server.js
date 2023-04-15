@@ -16,7 +16,7 @@ const app = express();
 
 // access
 const corsOptions = {
-    origin: ['https://wind-bnb-website.vercel.app', 'https://wind-bnb-website-api.vercel.app'],
+    origin: 'https://wind-bnb-website.vercel.app',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
   };
   
