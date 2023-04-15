@@ -72,18 +72,20 @@ initializePassport(
     },
 );
 
-const mongoStoreOptions = {
-    client: connectionString,
-    collectionName: 'sessions'
-  };
-const sessionOptions = {
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
-    store: MongoStore.create(mongoStoreOptions),
-};
+const { MongoClient } = require('mongodb');
+const client = new MongoClient(connectionString);
 
-app.use(session(sessionOptions));
+client.connect((err) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+
+  console.log('Connected successfully to MongoDB server');
+
+  // Now you can use this client object to create MongoStore for session
+});
+
 
 app.get('/session-info', (req, res) => {
     res.json({
