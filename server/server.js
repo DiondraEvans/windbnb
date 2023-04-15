@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const logger = require('morgan');
 const bcrypt = require('bcrypt')
+const MongoStore = require('connect-mongo')
 // cross origin access 
 const cors = require('cors');
 const axios = require("axios");
@@ -71,14 +72,19 @@ initializePassport(
     },
 );
 
-
-app.use(session({
-    secure: true,
+const mongoStoreOptions = {
+    mongoUrl: connectionString,
+    collectionName: 'sessions'
+  };
+const sessionOptions = {
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
+    store: MongoStore.create(mongoStoreOptions),
     cookie: { originalMaxAge: 3600000 }
-}))
+};
+
+app.use(session(sessionOptions));
 
 app.get('/session-info', (req, res) => {
     res.json({
