@@ -80,8 +80,7 @@ const sessionOptions = {
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
-    store: MongoStore.create(mongoStoreOptions),
-    cookie: { originalMaxAge: 3600000 }
+    store: MongoStore.create(mongoStoreOptions)
 };
 app.use(session(sessionOptions));
 
