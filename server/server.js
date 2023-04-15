@@ -73,15 +73,15 @@ initializePassport(
 );
 
 const mongoStoreOptions = {
-    mongoUrl: connectionString,
-    collectionName: 'sessions'
+    mongoUrl: `mongodb+srv://${process.env.mongoUsername}:${process.env.mongoPassword}@mongosetupcluster.anqqbl8.mongodb.net/test?retryWrites=true&w=majority`,
+    collectionName: 'sessions',
+    ttl: 1209600
   };
 const sessionOptions = {
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create(mongoStoreOptions),
-    cookie: { originalMaxAge: 3600000 }
 };
 
 app.use(session(sessionOptions));
