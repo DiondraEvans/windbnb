@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const logger = require('morgan');
 const bcrypt = require('bcrypt')
-const MongoStore = require('connect-mongo')
+
 // cross origin access 
 const cors = require('cors');
 const axios = require("axios");
