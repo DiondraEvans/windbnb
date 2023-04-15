@@ -53,6 +53,14 @@ app.use(session({
     cookie: { originalMaxAge: 3600000 }
 }))
 
+app.get('/session-info', (req, res) => {
+    if(req.session.passport){
+        console.log(req.session.passport)
+    }
+    res.json({
+        session: req.session
+    });
+});
 //everything a user needs to sign up
 app.post('/users/signup',async (req, res) => {
 
