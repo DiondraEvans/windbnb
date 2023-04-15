@@ -74,8 +74,7 @@ initializePassport(
 
 const mongoStoreOptions = {
     mongoUrl: `mongodb+srv://${process.env.mongoUsername}:${process.env.mongoPassword}@mongosetupcluster.anqqbl8.mongodb.net/test?retryWrites=true&w=majority`,
-    collectionName: 'sessions',
-    ttl: 1209600
+    collectionName: 'sessions'
   };
 const sessionOptions = {
     secret: process.env.SESSION_SECRET,
