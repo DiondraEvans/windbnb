@@ -81,6 +81,7 @@ const sessionOptions = {
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create(mongoStoreOptions),
+    cookie: { originalMaxAge: 3600000 }
 };
 app.use(session(sessionOptions));
 
