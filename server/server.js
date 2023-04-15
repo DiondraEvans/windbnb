@@ -73,7 +73,7 @@ initializePassport(
 );
 
 const mongoStoreOptions = {
-    client: `mongodb+srv://${process.env.mongoUsername}:${process.env.mongoPassword}@mongosetupcluster.anqqbl8.mongodb.net/VacationSite?retryWrites=true&w=majority`,
+    mongoUrl: `mongodb+srv://${process.env.mongoUsername}:${process.env.mongoPassword}@mongosetupcluster.anqqbl8.mongodb.net/test`,
     collectionName: 'sessions'
   };
 const sessionOptions = {
@@ -81,12 +81,12 @@ const sessionOptions = {
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create(mongoStoreOptions),
-    cookie: { originalMaxAge: 3600000 }
 };
 
 app.use(session(sessionOptions));
 
 app.get('/session-info', (req, res) => {
+    console.log(req.session)
     res.json({
         session: req.session
     });
