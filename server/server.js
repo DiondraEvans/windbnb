@@ -73,7 +73,7 @@ initializePassport(
 );
 
 const mongoStoreOptions = {
-    mongoUrl: `mongodb+srv://${process.env.mongoUsername}:${process.env.mongoPassword}@mongosetupcluster.anqqbl8.mongodb.net/test`,
+    mongoUrl: connectionString,
     collectionName: 'sessions'
   };
 const sessionOptions = {
@@ -82,7 +82,6 @@ const sessionOptions = {
     saveUninitialized: true,
     store: MongoStore.create(mongoStoreOptions),
 };
-
 app.use(session(sessionOptions));
 
 app.get('/session-info', (req, res) => {
