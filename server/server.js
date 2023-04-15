@@ -3,10 +3,6 @@ const mongoose = require('mongoose');
 const path = require('path');
 const logger = require('morgan');
 const bcrypt = require('bcrypt')
-const passport = require('passport');
-const session = require('express-session');
-const initializePassport = require('./config/passport-config.js')
-const MongoStore = require('connect-mongo')
 // cross origin access 
 const cors = require('cors');
 const axios = require("axios");
@@ -41,36 +37,10 @@ mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: 
 mongoose.connection.once('open', ()=> {
     console.log('connected to mongo');
 });
-const mongoStoreOptions = {
-  mongoUrl: connectionString,
-  collectionName: 'sessions'
-};
 
-
-initializePassport(
-    passport,
-    // passport tells us that they want a function that will return the correct user given an email
-    async email => {
-        let user = await User.findOne({email: email})
-        return user;
-    },
-    async id => {
-        let user = await User.findById(id);
-        return user;
-    },
-);
-
-
-const sessionOptions = {
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
-    store: MongoStore.create(mongoStoreOptions)
-};
-
-app.use(session(sessionOptions));
-
-//routes
+const passport = require('passport');
+const session = require('express-session');
+const initializePassport = require('./config/passport-config.js')
 //everything a user needs to sign up
 app.post('/users/signup',async (req, res) => {
 
@@ -88,14 +58,34 @@ app.post('/users/signup',async (req, res) => {
 });
 //everything below is what a user needs to login
 
+initializePassport(
+    passport,
+    // passport tells us that they want a function that will return the correct user given an email
+    async email => {
+        let user = User.findOne({email: email})
+        return user;
+    },
+    async id => {
+        let user = User.findById(id);
+        return user;
+    },
+);
+
+
+app.use(session({
+    secure: true,
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    cookie: { originalMaxAge: 3600000 }
+}))
+
 app.get('/session-info', (req, res) => {
-    console.log(req.session.passport.user)
-    if (req.session) {
-      res.json({ session: req.session });
-    } else {
-      res.status(401).json({ message: 'User not authenticated' });
-    }
-  });
+    res.json({
+        session: req.session
+    });
+});
+
 
 
 app.put('/users/login', async (req, res, next) => {
@@ -114,23 +104,13 @@ app.put('/users/login', async (req, res, next) => {
             req.logIn(user, err => {
                 if (err) throw err;
                 res.json({
-                    message: "Login successful",
-                    user: {
-                      id: user._id,
-                      email: user.email,
-                      name: user.name,
-                    },
-                  });
+                    message: "successfully authenticated",
+                    // remove user
+                })
             })
         }
     })(req, res, next);
 })
-
-
-app.get('/test_route', (req, res) => {
-    res.send("good route!")
-})
-
 
 app.get('/search', async (req, res) => {
     let where = req.query.location.toLowerCase()
