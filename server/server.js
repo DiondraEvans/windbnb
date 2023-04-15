@@ -73,7 +73,7 @@ initializePassport(
 );
 
 const mongoStoreOptions = {
-    mongoUrl: `mongodb+srv://${process.env.mongoUsername}:${process.env.mongoPassword}@mongosetupcluster.anqqbl8.mongodb.net/test?retryWrites=true&w=majority`,
+    mongoUrl: `mongodb+srv://${process.env.mongoUsername}:${process.env.mongoPassword}@mongosetupcluster.anqqbl8.mongodb.net/VacationSite?retryWrites=true&w=majority`,
     collectionName: 'sessions'
   };
 const sessionOptions = {
@@ -81,6 +81,7 @@ const sessionOptions = {
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create(mongoStoreOptions),
+    cookie: { originalMaxAge: 3600000 }
 };
 
 app.use(session(sessionOptions));
