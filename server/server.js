@@ -73,7 +73,7 @@ initializePassport(
 );
 
 const mongoStoreOptions = {
-    mongoUrl: `mongodb+srv://${process.env.mongoUsername}:${process.env.mongoPassword}@mongosetupcluster.anqqbl8.mongodb.net/test?retryWrites=true&w=majority`,
+    mongoUrl: `mongodb+srv://${process.env.mongoUsername}:${process.env.mongoPassword}@mongosetupcluster.anqqbl8.mongodb.net/test`,
     collectionName: 'sessions'
   };
 const sessionOptions = {
