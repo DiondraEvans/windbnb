@@ -15,10 +15,12 @@ let User = require('./models/user');
 const app = express();
 
 // access
-app.use(cors({
-    origin: "*"
-}));
-
+const corsOptions = {
+    origin: 'https://wind-bnb-website.vercel.app',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  };
+  
+  app.use(cors(corsOptions));
 // logs the different requests to our server
 app.use(logger('dev'))
 
@@ -42,6 +44,15 @@ mongoose.connection.once('open', ()=> {
 const passport = require('passport');
 const session = require('express-session');
 const initializePassport = require('./config/passport-config.js')
+
+app.use(session({
+    secure: true,
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    cookie: { originalMaxAge: 3600000 }
+}))
+
 //everything a user needs to sign up
 app.post('/users/signup',async (req, res) => {
 
@@ -71,27 +82,6 @@ initializePassport(
         return user;
     },
 );
-
-const mongoStoreOptions = {
-    mongoUrl: connectionString,
-    collectionName: 'sessions'
-  };
-const sessionOptions = {
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
-    store: MongoStore.create(mongoStoreOptions)
-};
-app.use(session(sessionOptions));
-
-app.get('/session-info', (req, res) => {
-    console.log(req.session)
-    res.json({
-        session: req.session
-    });
-});
-
-
 
 app.put('/users/login', async (req, res, next) => {
     console.log(req.body);
