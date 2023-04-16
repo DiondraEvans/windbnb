@@ -57,6 +57,9 @@ app.get('/session-info', (req, res) => {
     if(req.session.passport){
         console.log(req.session.passport)
     }
+    res.setHeader('Access-Control-Allow-Origin', 'https://wind-bnb-website.vercel.app');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     res.json({
         session: req.session
     });
@@ -92,6 +95,10 @@ initializePassport(
 );
 
 app.put('/users/login', async (req, res, next) => {
+     // set CORS headers before sending the response
+    res.setHeader('Access-Control-Allow-Origin', 'https://wind-bnb-website.vercel.app');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     console.log(req.body);
     // passport authentication
     passport.authenticate("local", (err, user, message) => {
@@ -113,7 +120,8 @@ app.put('/users/login', async (req, res, next) => {
             })
         }
     })(req, res, next);
-})
+   
+});
 
 app.get('/search', async (req, res) => {
     let where = req.query.location.toLowerCase()
