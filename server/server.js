@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const logger = require('morgan');
 const bcrypt = require('bcrypt')
-
+const cookieParser = require('cookie-parser');
 // cross origin access 
 const cors = require('cors');
 const axios = require("axios");
@@ -26,7 +26,7 @@ app.use(logger('dev'))
 
 //parse stringified objects (JSON)
 app.use(express.json())
-
+app.use(cookieParser());
 // server build folder
 app.use(express.static(path.join(__dirname, '../client/build')));
 
@@ -60,9 +60,8 @@ app.get('/session-info', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.json({
-        session: req.session
-    });
+    res.cookie('thecookie', "abcabcabc" , { maxAge: 3600000, httpOnly: true });
+    res.json(req.session);
 });
 //everything a user needs to sign up
 app.post('/users/signup',async (req, res) => {
@@ -113,6 +112,7 @@ app.post('/users/login', async (req, res, next) => {
             // delete user.password
             req.logIn(user, err => {
                 if (err) throw err;
+                res.cookie('thecookie', "abcabcabc" , { maxAge: 3600000, httpOnly: true });
                 res.json(req.session)
             })
         }
