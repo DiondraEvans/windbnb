@@ -4,6 +4,10 @@ const path = require('path');
 const logger = require('morgan');
 const bcrypt = require('bcrypt')
 const cookieParser = require('cookie-parser');
+const passport = require('passport');
+const session = require('express-session');
+const initializePassport = require('./config/passport-config.js')
+
 // cross origin access 
 const cors = require('cors');
 const axios = require("axios");
@@ -41,9 +45,6 @@ mongoose.connection.once('open', ()=> {
     console.log('connected to mongo');
 });
 
-const passport = require('passport');
-const session = require('express-session');
-const initializePassport = require('./config/passport-config.js')
 
 app.use(session({
     secure: true,
@@ -60,7 +61,7 @@ app.get('/session-info', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  
+    res.cookie('thecookie', "abcabcabc" , { maxAge: 3600000, httpOnly: true });
     res.json(req.session);
 });
 //everything a user needs to sign up
