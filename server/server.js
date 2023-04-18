@@ -114,7 +114,7 @@ app.put('/users/login', async (req, res, next) => {
             req.logIn(user, err => {
                 if (err) throw err;
                 res.json({
-                    message: "successfully authenticated",
+                    message: `successfully authenticated ${req.session}`,
                     // remove user
                 })
             })
