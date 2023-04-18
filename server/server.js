@@ -94,12 +94,12 @@ initializePassport(
     },
 );
 
-app.put('/users/login', async (req, res, next) => {
+app.post('/users/login', async (req, res, next) => {
      // set CORS headers before sending the response
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    console.log(req.body);
+    console.log(req.session);
     // passport authentication
     passport.authenticate("local", (err, user, message) => {
         console.log(message);
@@ -113,10 +113,7 @@ app.put('/users/login', async (req, res, next) => {
             // delete user.password
             req.logIn(user, err => {
                 if (err) throw err;
-                res.json({
-                    message: `successfully authenticated ${req.session}`,
-                    // remove user
-                })
+                res.json(req.session)
             })
         }
     })(req, res, next);

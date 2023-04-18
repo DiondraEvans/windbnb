@@ -38,7 +38,6 @@ module.exports = async function(passport) {
     passport.serializeUser((user, cb) => {
         // do stuff here
         cb(null, user)
-        console.log(user, user._id,)
     });
     // 3. add deserialize function to passport library
     // take out of session
