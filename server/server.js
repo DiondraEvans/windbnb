@@ -60,7 +60,7 @@ app.get('/session-info', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.cookie('thecookie', "abcabcabc" , { maxAge: 3600000, httpOnly: true });
+  
     res.json(req.session);
 });
 //everything a user needs to sign up
