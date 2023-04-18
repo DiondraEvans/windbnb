@@ -16,7 +16,7 @@ const app = express();
 
 // access
 const corsOptions = {
-    origin: 'https://wind-bnb-website.vercel.app',
+    origin: '*',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
   };
   
@@ -57,7 +57,7 @@ app.get('/session-info', (req, res) => {
     if(req.session.passport){
         console.log(req.session.passport)
     }
-    res.setHeader('Access-Control-Allow-Origin', 'https://wind-bnb-website.vercel.app');
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     res.json({
@@ -96,7 +96,7 @@ initializePassport(
 
 app.put('/users/login', async (req, res, next) => {
      // set CORS headers before sending the response
-    res.setHeader('Access-Control-Allow-Origin', 'https://wind-bnb-website.vercel.app');
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     console.log(req.body);
