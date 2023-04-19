@@ -11,8 +11,7 @@ import { Link} from 'react-router-dom';
 import './App.css';
 import Footer from './components/footer';
 import ResponsiveNav from './components/responsive_nav';
-
-
+import Video from '../src/images/water.mp4'
 function App() {
  
   let {  names, tripName, carddata, setcarddata } = useContext(AppContext);
@@ -70,7 +69,7 @@ const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="App">
       {isOpen ? <Nav /> : <ResponsiveNav />}
-      
+      <video src={Video} autoPlay muted loop id="myVideo" type="video/mp4" style={{width: "100%", height: "100%"}} />
      
       {tripName ? <h2>Step 2: pick an accomodation for your trip: <h2 style={{color: "#38B7FF"}}>{tripName}</h2></h2> : ""}
       <SearchBar />
