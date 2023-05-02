@@ -43,21 +43,7 @@ mongoose.connection.once('open', ()=> {
 
 
 const initializePassport = require('./config/passport-config.js')
-//everything a user needs to sign up
-app.post('/users/signup',async (req, res) => {
 
-    let hashedPassword = await bcrypt.hash(req.body.password, 10)
-
-    // use User model to place user in the database
-    let userFromCollection = await User.create({
-        email: req.body.email,
-        name: req.body.name,
-        password: hashedPassword
-    })
-
-    // sending user response after creation or login
-    res.json(`user created ${userFromCollection}`)
-});
 //everything below is what a user needs to login
 const store = MongoStore.create({
     mongoUrl: connectionString,
@@ -83,7 +69,24 @@ app.use(session({
         maxAge: 3600000 }
 }))
 
+// initialize Passport and session middleware
+app.use(passport.initialize());
+app.use(passport.session());
+//everything a user needs to sign up
+app.post('/users/signup',async (req, res) => {
 
+    let hashedPassword = await bcrypt.hash(req.body.password, 10)
+
+    // use User model to place user in the database
+    let userFromCollection = await User.create({
+        email: req.body.email,
+        name: req.body.name,
+        password: hashedPassword
+    })
+
+    // sending user response after creation or login
+    res.json(`user created ${userFromCollection}`)
+});
 
 initializePassport(
     passport,
@@ -199,9 +202,7 @@ app.put('/update_trip/:id', async (req, res) => {
     console.log(response)
     res.send(response)
   });
-// initialize Passport and session middleware
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 app.post('/logout', function(req, res, next) {
     console.log(req);
