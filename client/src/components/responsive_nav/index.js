@@ -69,7 +69,7 @@ console.log(user)
                   </div>
                   <div className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
                       <ul className="res-links">
-                        <li className="navbar-item"><Link to={'/authpage'} className="sign_up_link"><p>Sign in</p><img src={UserNotSignedIn} className="user-sign-img"></img></Link></li>
+                        <li className="navbar-item"><Link to={'/authpage'} className="sign_up_link"><p>Log in</p><img src={UserNotSignedIn} className="user-sign-img"></img></Link></li>
                           <li className="navbar-item"><Link to={'/'}>Home</Link></li>
                           <li className="navbar-item"><Link to={'/activetrips'}>Active trips</Link></li>
                           <li className="navbar-item"><Link to={''}>Online Experiences</Link></li>

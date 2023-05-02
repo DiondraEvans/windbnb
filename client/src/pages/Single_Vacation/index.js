@@ -2,7 +2,6 @@ import './index.css';
 import axios from 'axios';
 import React, { useEffect, useState, useContext  } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
-import { Link, useNavigate } from 'react-router-dom';
 import Picturegrid from "../../components/picture_grid"
 import SearchBar from '../../components/search-bar';
 import ReservedTripBox from '../../components/Reserve_element';

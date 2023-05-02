@@ -3,14 +3,12 @@ const mongoose = require('mongoose');
 const path = require('path');
 const logger = require('morgan');
 const bcrypt = require('bcrypt')
-const cookieParser = require('cookie-parser');
-const passport = require('passport');
-const session = require('express-session');
-const initializePassport = require('./config/passport-config.js')
-
 // cross origin access 
 const cors = require('cors');
 const axios = require("axios");
+const passport = require('passport');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 require('dotenv').config()
 //have a model
 let accomodation = require('./models/accomodations');
@@ -19,20 +17,18 @@ let User = require('./models/user');
 const app = express();
 
 // access
-const corsOptions = {
-    origin: '*',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-  };
-  
-  app.use(cors(corsOptions));
+app.use(cors({
+    origin: "*"
+}));
+
 // logs the different requests to our server
 app.use(logger('dev'))
 
 //parse stringified objects (JSON)
 app.use(express.json())
-app.use(cookieParser());
+
 // server build folder
-app.use(express.static(path.join(__dirname, '../client/build')));
+app.use(express.static(path.join(__dirname, 'build')));
 
 //remember to input user and pass variables
 let connectionString =`mongodb+srv://${process.env.mongoUsername}:${process.env.mongoPassword}@mongosetupcluster.anqqbl8.mongodb.net/VacationSite?retryWrites=true&w=majority`
@@ -46,24 +42,7 @@ mongoose.connection.once('open', ()=> {
 });
 
 
-app.use(session({
-    secure: true,
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
-    cookie: { originalMaxAge: 3600000 }
-}))
-
-app.get('/session-info', (req, res) => {
-    if(req.session.passport){
-        console.log(req.session.passport)
-    }
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.cookie('thecookie', "abcabcabc" , { maxAge: 3600000, httpOnly: true });
-    res.json(req.session);
-});
+const initializePassport = require('./config/passport-config.js')
 //everything a user needs to sign up
 app.post('/users/signup',async (req, res) => {
 
@@ -80,6 +59,31 @@ app.post('/users/signup',async (req, res) => {
     res.json(`user created ${userFromCollection}`)
 });
 //everything below is what a user needs to login
+const store = MongoStore.create({
+    mongoUrl: connectionString,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: 'thisshouldbeabettersecret!'
+    }
+});
+store.on("error", function(e){
+    console.log("SESSION STORE ERROR", e)
+})
+
+app.use(session({
+    store,
+    name: "session",
+    secure: true,
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 3600000,
+        maxAge: 3600000 }
+}))
+
+
 
 initializePassport(
     passport,
@@ -94,12 +98,20 @@ initializePassport(
     },
 );
 
+
+
+
+
+app.get('/session-info', (req, res) => {
+    res.json({
+        session: req.session
+    });
+});
+
+
+
 app.post('/users/login', async (req, res, next) => {
-     // set CORS headers before sending the response
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    console.log(req.session);
+    console.log(req.body);
     // passport authentication
     passport.authenticate("local", (err, user, message) => {
         console.log(message);
@@ -113,13 +125,16 @@ app.post('/users/login', async (req, res, next) => {
             // delete user.password
             req.logIn(user, err => {
                 if (err) throw err;
-                res.cookie('thecookie', "abcabcabc" , { maxAge: 3600000, httpOnly: true });
                 res.json(req.session)
             })
         }
     })(req, res, next);
-   
-});
+})
+
+app.get('/test_route', (req, res) => {
+    res.send("good route!")
+})
+
 
 app.get('/search', async (req, res) => {
     let where = req.query.location.toLowerCase()
@@ -210,6 +225,6 @@ app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-app.listen(process.env.PORT || 5000, () => {
-    console.log(`Server is listening on port ${process.env.PORT || 5000}`);
-  });
+app.listen(5000, () => {
+    console.log(`Server is Listening on 5000`)
+});

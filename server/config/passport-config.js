@@ -4,11 +4,10 @@ const localStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
 module.exports = async function(passport) {
-  
     // 1 use the local strategy
     // email and password checking 
     passport.use(
-        new localStrategy({usernameField: "email"}, async (email, password, done) => {
+       new localStrategy({usernameField: "email", passwordField: 'password'}, async (email, password, done) => {
             // check if user with this email exists
             console.log("in strategy");
             // await user here
@@ -37,7 +36,7 @@ module.exports = async function(passport) {
     // callback function - a function that runs after another function (or at a specific trigger)
     passport.serializeUser((user, cb) => {
         // do stuff here
-        cb(null, user)
+        return cb(null, user)
     });
     // 3. add deserialize function to passport library
     // take out of session

@@ -20,13 +20,13 @@ export const getUserFromSession = async () => {
     })
     console.log(response);
     // WE HAVE THE LOGGED IN USER! :)
-    // if (response.data.session.passport) {
-    //   let user = response.data.session.passport.user;
-    //   console.log(user)
-    //   return user;
-    // } else {
-    // return false
-    // }
+    if (response.data.session.passport) {
+      let user = response.data.session.passport.user;
+      console.log(user)
+      return user;
+    } else {
+    return false
+    }
 }
 
 export const makeServerCall = async (user) => {
