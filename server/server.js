@@ -20,23 +20,7 @@ const app = express();
 app.use(cors({
     origin: "*"
 }));
-const allowCors = fn => async (req, res) => {
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    // another common pattern
-    // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-    res.setHeader(
-      'Access-Control-Allow-Headers',
-      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-    )
-    if (req.method === 'OPTIONS') {
-      res.status(200).end()
-      return
-    }
-    return await fn(req, res)
-  }
-  
+
 // logs the different requests to our server
 app.use(logger('dev'))
 
@@ -88,21 +72,6 @@ app.use(session({
 // initialize Passport and session middleware
 app.use(passport.initialize());
 app.use(passport.session());
-//everything a user needs to sign up
-app.post('/users/signup',async (req, res) => {
-
-    let hashedPassword = await bcrypt.hash(req.body.password, 10)
-
-    // use User model to place user in the database
-    let userFromCollection = await User.create({
-        email: req.body.email,
-        name: req.body.name,
-        password: hashedPassword
-    })
-
-    // sending user response after creation or login
-    res.json(`user created ${userFromCollection}`)
-});
 
 initializePassport(
     passport,
@@ -118,11 +87,15 @@ initializePassport(
 );
 
 
-
+const corsHeaders = [ 
+res.header('Access-Control-Allow-Origin', 'https://wind-bnb-website.vercel.app.com'),
+res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'),
+res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+]
 
 
 app.get('/session-info', (req, res) => {
-    allowCors
+    corsHeaders
     res.json({
         session: req.session
     });
@@ -131,9 +104,9 @@ app.get('/session-info', (req, res) => {
 
 
 app.post('/users/login', async (req, res, next) => {
-    allowCors
     console.log(req.body);
     // passport authentication
+    corsHeaders
     passport.authenticate("local", (err, user, message) => {
         console.log(message);
         if (err) throw err;
@@ -158,16 +131,17 @@ app.get('/test_route', (req, res) => {
 
 
 app.get('/search', async (req, res) => {
+    corsHeaders
     let where = req.query.location.toLowerCase()
     let type = req.query.type
     let guests = req.query.guest
     //doing greater than the number the user inputs means they will get the amount of room needed for the amount of people coming
     let data = await accomodation.find({"city": where, "type": type, "max_guests": {$gt : guests}})
     console.log(data)
-    allowCors
     res.send(data)
 })
 app.get('/single/:id', async (req, res) => {
+    corsHeaders
     let id = req.params.id
     let data = await accomodation.findOne({"_id": id}) 
     console.log(data)
@@ -224,6 +198,7 @@ app.put('/update_trip/:id', async (req, res) => {
 
 
 app.post('/logout', function(req, res, next) {
+    corsHeaders
     console.log(req);
 
     try {
