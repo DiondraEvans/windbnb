@@ -225,6 +225,7 @@ app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-app.listen(5000, () => {
-    console.log(`Server is Listening on 5000`)
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Server is Listening on port ${port}`)
 });
