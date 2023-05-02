@@ -20,7 +20,23 @@ const app = express();
 app.use(cors({
     origin: "*"
 }));
-
+const allowCors = fn => async (req, res) => {
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    // another common pattern
+    // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    )
+    if (req.method === 'OPTIONS') {
+      res.status(200).end()
+      return
+    }
+    return await fn(req, res)
+  }
+  
 // logs the different requests to our server
 app.use(logger('dev'))
 
@@ -106,6 +122,7 @@ initializePassport(
 
 
 app.get('/session-info', (req, res) => {
+    allowCors
     res.json({
         session: req.session
     });
@@ -114,6 +131,7 @@ app.get('/session-info', (req, res) => {
 
 
 app.post('/users/login', async (req, res, next) => {
+    allowCors
     console.log(req.body);
     // passport authentication
     passport.authenticate("local", (err, user, message) => {
@@ -146,6 +164,7 @@ app.get('/search', async (req, res) => {
     //doing greater than the number the user inputs means they will get the amount of room needed for the amount of people coming
     let data = await accomodation.find({"city": where, "type": type, "max_guests": {$gt : guests}})
     console.log(data)
+    allowCors
     res.send(data)
 })
 app.get('/single/:id', async (req, res) => {
