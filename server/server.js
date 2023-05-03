@@ -17,9 +17,7 @@ let User = require('./models/user');
 const app = express();
 
 // access
-app.use(cors({
-    origin: "*"
-}));
+app.use(cors());
 
 // logs the different requests to our server
 app.use(logger('dev'))
