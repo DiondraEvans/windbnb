@@ -87,15 +87,10 @@ initializePassport(
 );
 
 
-const corsHeaders = [ 
-res.header('Access-Control-Allow-Origin', 'https://wind-bnb-website.vercel.app.com'),
-res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'),
-res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-]
-
-
 app.get('/session-info', (req, res) => {
-    corsHeaders
+    res.header('Access-Control-Allow-Origin', 'https://wind-bnb-website.vercel.app.com');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.json({
         session: req.session
     });
@@ -106,7 +101,9 @@ app.get('/session-info', (req, res) => {
 app.post('/users/login', async (req, res, next) => {
     console.log(req.body);
     // passport authentication
-    corsHeaders
+    res.header('Access-Control-Allow-Origin', 'https://wind-bnb-website.vercel.app.com');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     passport.authenticate("local", (err, user, message) => {
         console.log(message);
         if (err) throw err;
@@ -131,7 +128,9 @@ app.get('/test_route', (req, res) => {
 
 
 app.get('/search', async (req, res) => {
-    corsHeaders
+    res.header('Access-Control-Allow-Origin', 'https://wind-bnb-website.vercel.app.com');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     let where = req.query.location.toLowerCase()
     let type = req.query.type
     let guests = req.query.guest
@@ -141,7 +140,9 @@ app.get('/search', async (req, res) => {
     res.send(data)
 })
 app.get('/single/:id', async (req, res) => {
-    corsHeaders
+    res.header('Access-Control-Allow-Origin', 'https://wind-bnb-website.vercel.app.com');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     let id = req.params.id
     let data = await accomodation.findOne({"_id": id}) 
     console.log(data)
