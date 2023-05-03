@@ -3,7 +3,7 @@ import axios from 'axios';
 export const logIn = async (formData) => {
     let serverResponse = await axios({
         method: "POST",
-        url: "https://wind-bnb-website-api.vercel.app/users/login",
+        url: "https://cors-anywhere.herokuapp.com/https://wind-bnb-website-api.vercel.app/users/login",
         data: formData,
         mode: 'cors'
     });
@@ -15,7 +15,7 @@ return serverResponse;
 export const getUserFromSession = async () => {
     let response = await axios({
         method: "GET",
-        url: 'https://wind-bnb-website-api.vercel.app/session-info',
+        url: 'https://cors-anywhere.herokuapp.com/https://wind-bnb-website-api.vercel.app/session-info',
         mode: 'cors'
     })
     console.log(response);
@@ -33,7 +33,7 @@ export const makeServerCall = async (user) => {
     console.log(user)
     let serverResponse = await axios({
         method: 'GET',
-        url: `https://wind-bnb-website-api.vercel.app/get_trips/${user}`
+        url: `https://cors-anywhere.herokuapp.com/https://wind-bnb-website-api.vercel.app/get_trips/${user}`
     });
     console.log(serverResponse);
     

@@ -32,7 +32,7 @@ const [isOpen, setIsOpen] = useState(false);
       try {
         const response = await axios({
           method: 'GET',
-          url: 'https://wind-bnb-website-api.vercel.app/search?location=Atlanta&type=home&guest=2'
+          url: 'https://cors-anywhere.herokuapp.com/https://wind-bnb-website-api.vercel.app/search?location=Atlanta&type=home&guest=2'
         });
         console.log(response.data);
         let data = response.data
