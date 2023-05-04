@@ -143,6 +143,11 @@ console.log(registeredUser)
 });
 //everything below is what a user needs to login
 app.post('/users/login', async (req, res, next) => {
+     //set header first to allow request or origin domain (value can be different)
+     res.setHeader('Access-Control-Allow-Origin', '*');
+     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+     res.setHeader('Access-Control-Allow-Credentials', true);
+     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, OPTIONS, DELETE');
     console.log(req.body);
     // passport authentication
     passport.authenticate("local", (err, user, message) => {
@@ -161,6 +166,11 @@ app.post('/users/login', async (req, res, next) => {
             })
         }
     })(req, res, next);
+    if(req.method === 'OPTIONS') {
+        return res.status(200).json(({
+            body: "OK"
+        }))
+    }
 })
 
 app.get('/test_route', (req, res) => {
