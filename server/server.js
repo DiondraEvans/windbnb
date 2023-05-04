@@ -48,7 +48,7 @@ const store = MongoStore.create({
     mongoUrl: connectionString,
     touchAfter: 24 * 60 * 60,
     crypto: {
-        secret: 'thisshouldbeabettersecret!'
+        secret: process.env.SESSION_SECRET
     }
 });
 store.on("error", function(e){
