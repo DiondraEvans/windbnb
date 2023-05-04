@@ -18,7 +18,7 @@ const UserLogOut = () => {
             });
             console.log(response)
           } catch (error) {
-            console.error(error);
+            console.log(`you have an error logging out ${error}`);
           }
         // //user will be deleted/empty string on passport object which can be see on line 16 of utilities when getting session
         setUser(false)

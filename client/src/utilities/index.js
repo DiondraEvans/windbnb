@@ -1,7 +1,7 @@
 import axios from 'axios';
 // utilites folder is for universal, reusable functions
 export const logIn = async (formData) => {
-    try{
+ 
         let serverResponse = await axios({
             method: "POST",
             url: "https://wind-bnb-website-api.vercel.app/users/login",
@@ -11,14 +11,13 @@ export const logIn = async (formData) => {
         console.log(serverResponse);
         return serverResponse;
     
-    } catch (e){
-        return "You have an error with the log in. The user was not authenticated."
-    }
+   
+   
 }
     
 
 export const getUserFromSession = async () => {
-    try{
+   
         let response = await axios({
             method: "GET",
             url: 'https://wind-bnb-website-api.vercel.app/session-info',
@@ -33,9 +32,7 @@ export const getUserFromSession = async () => {
         } else {
         return false
         }
-    } catch(e){
-        return "You have an error getting the session-info"
-    }
+   
    
 }
 

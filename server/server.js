@@ -9,13 +9,14 @@ const axios = require("axios");
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const LocalStrategy = require('passport-local');
 require('dotenv').config()
 //have a model
 let accomodation = require('./models/accomodations');
 let trip = require('./models/trip');
 let User = require('./models/user');
 const app = express();
-
+// const initializePassport = require('./config/passport-config.js')
 // access
 app.use(cors({
     origin: "*"
@@ -41,7 +42,7 @@ mongoose.connection.once('open', ()=> {
     console.log('connected to mongo');
 });
 
-const initializePassport = require('./config/passport-config.js')
+
 
 //everything below is what a user needs to login
 const store = MongoStore.create({
@@ -71,19 +72,21 @@ app.use(session({
 // initialize Passport and session middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
-initializePassport(
-    passport,
-    // passport tells us that they want a function that will return the correct user given an email
-    async email => {
-        let user = User.findOne({email: email})
-        return user;
-    },
-    async id => {
-        let user = User.findById(id);
-        return user;
-    },
-);
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+// initializePassport(
+//     passport,
+//     // passport tells us that they want a function that will return the correct user given an email
+//     async email => {
+//         let user = User.findOne({email: email})
+//         return user;
+//     },
+//     async id => {
+//         let user = User.findById(id);
+//         return user;
+//     },
+// );
 
 
 app.get('/session-info', (req, res) => {
@@ -92,7 +95,25 @@ app.get('/session-info', (req, res) => {
     });
 });
 
+//everything a user needs to sign up
+app.post('/users/signup',async (req, res) => {
+const {email, username, password} = req.body;
+const user = new User ({email, username});
+const registeredUser = await User.register(user, password);
+console.log(registeredUser)
+    // let hashedPassword = await bcrypt.hash(req.body.password, 10)
 
+    // // use User model to place user in the database
+    // let userFromCollection = await User.create({
+    //     email: req.body.email,
+    //     name: req.body.name,
+    //     password: hashedPassword
+    // })
+
+    // // sending user response after creation or login
+    res.json(`user created ${registeredUser}`)
+});
+//everything below is what a user needs to login
 app.post('/users/login', async (req, res, next) => {
     console.log(req.body);
     // passport authentication
@@ -185,7 +206,6 @@ app.put('/update_trip/:id', async (req, res) => {
 
 
 app.post('/logout', function(req, res, next) {
-    corsHeaders
     console.log(req);
 
     try {
@@ -207,7 +227,7 @@ app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Server is Listening on port ${port}`)
 });
